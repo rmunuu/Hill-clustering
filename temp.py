@@ -9,24 +9,20 @@ from scipy.ndimage import label
 from sklearn.preprocessing import MinMaxScaler
 import imageio
 
-# data1 = make_circles(factor=0.5, random_state=42, noise=0.05, n_samples=500)[0]
-# data2 = make_moons(n_samples=500, random_state=42, noise=0.05)[0]
-data3 = make_blobs(n_samples=500, random_state=42, cluster_std=2)[0]
-scaler = MinMaxScaler(feature_range=(0, 200))
-# if len(data1.shape) == 1:
-#     data1 = data1.reshape(-1, 1)
-# data1 = scaler.fit_transform(data1)
-# if len(data2.shape) == 1:
-#     data2 = data2.reshape(-1, 1)
-# data2 = scaler.fit_transform(data2)
-if len(data3.shape) == 1:
-    data3 = data3.reshape(-1, 1)
-data3 = scaler.fit_transform(data3)
+
+# data3 = make_blobs(n_samples=500, random_state=42, cluster_std=2)[0]
+# scaler = MinMaxScaler(feature_range=(0, 200))
+# if len(data3.shape) == 1:
+#     data3 = data3.reshape(-1, 1)
+# data3 = scaler.fit_transform(data3)
+
+with open('./data/data_pickle/data_5.pkl', 'rb') as f:
+    data = pickle.load(f)
 
 def gaussian(x, y, x0, y0, sigma=1):
     return np.exp(-((x - x0)**2 + (y - y0)**2) / (2 * sigma**2))
 
-X = data3
+X = data
 
 s = 10
 
@@ -187,7 +183,7 @@ def simul_edge_custom(data, lim, grid, ball, sigma, hill_method=0, k=2): # grid/
 
     return level_bin_array, edge
 
-level_bin_array3, edge3 = simul_edge_custom(data3, lim=(200, 200), grid=200, ball=200, sigma=10, k=3)
+level_bin_array3, edge3 = simul_edge_custom(X, lim=(200, 200), grid=200, ball=200, sigma=10, k=3)
 
 # for i in range(len(level_bin_array3)):
 #     if i%10 == 0:
